@@ -1,8 +1,33 @@
 version: '3.4'
 
+networks:
+  db-access:
+    driver: bridge 
+
 services:
   movieodatademo:
     image: ${DOCKER_REGISTRY-}movieodatademo
     build:
       context: .
       dockerfile: MovieOdataDemo/Dockerfile
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+    networks:
+      - db-access
+  mysqldb:
+    platform: linux/x86_64
+    image: mysql:5.7
+    restart: always
+    env_file:
+      - ".env"
+    environment:
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+    ports:
+      - 3306:3306
+    networks:
+      - db-access
+    volumes:
+      - "${MYSQL_DATA_SRC}:/var/lib/mysql"
