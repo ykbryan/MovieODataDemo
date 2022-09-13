@@ -25,6 +25,7 @@ namespace MovieOdataDemo.Controllers
         {
             return Ok(_context.Movies);
         }
+
     }
 }
 
