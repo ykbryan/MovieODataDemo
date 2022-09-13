@@ -1,4 +1,8 @@
-﻿var builder = WebApplication.CreateBuilder(args);
+﻿using Microsoft.EntityFrameworkCore;
+using MovieOdataDemo.Databases;
+using MovieOdataDemo.Services;
+
+var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
@@ -7,6 +11,14 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+// Add scoped services
+builder.Services.AddScoped<IMovieService, MovieService>();
+
+// Add database connections
+var mysqlString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<MysqlContext>(
+                options => options.UseMySql(mysqlString, ServerVersion.AutoDetect(mysqlString)));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
