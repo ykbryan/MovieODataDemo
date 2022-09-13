@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using MovieOdataDemo.Databases;
 using MovieOdataDemo.Models;
 using MovieOdataDemo.Services;
@@ -19,6 +20,7 @@ namespace MovieOdataDemo.Controllers
         }
 
         [HttpGet]
+        [EnableQuery]
         public ActionResult<List<Movie>> Get()
         {
             return Ok(_context.Movies);
