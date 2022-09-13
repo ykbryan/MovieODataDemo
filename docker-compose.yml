@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  movieodatademo:
+    image: ${DOCKER_REGISTRY-}movieodatademo
+    build:
+      context: .
+      dockerfile: MovieOdataDemo/Dockerfile
