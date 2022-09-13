@@ -12,8 +12,10 @@ services:
       dockerfile: MovieOdataDemo/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings: "DefaultConnection=\"Host=mysqldb;Port=5432;Database=${MYSQL_DATABASE};username=${MYSQL_USER};password=${MYSQL_PASSWORD}\""
     networks:
       - db-access
+
   mysqldb:
     platform: linux/x86_64
     image: mysql:5.7
